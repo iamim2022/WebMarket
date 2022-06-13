@@ -3,6 +3,7 @@ package com.survivalcoding.domain.model;
 import java.util.Objects;
 
 /*
+ * ##########hashCode 값 변화 확인용 _ equals, hashCode 메서드 Override 안함 ###########
  java class와 객체
  
  1. 무지성 private 멤버 변수
@@ -13,9 +14,9 @@ import java.util.Objects;
  */
 
 
-public class Product extends Object {	
+public class ProductTest extends Object {	
 	public static void main(String[] args) {
-		Product product = new Product("33","33", 11);
+		ProductTest product = new ProductTest("33","33", 11);
 		//Product product2 = new Product();
 		//product.setId("111");     //타인이 이 코드 사용시 setID메서드로 값에 접근하도록 한다.
 		
@@ -27,39 +28,43 @@ public class Product extends Object {
 		//출력결과 com.survivalcoding.domain.model.Product@3d012ddd
 		//hashCode 출력된다.
 		
-		Product product2 = new Product("33","33", 11);
+		ProductTest product2 = new ProductTest("33","33", 11);
 		System.out.println(product2.hashCode());	//1651191114 -> equals, hashCode 재정의 후 1663으로 변화
 		
 		//Quiz? : false
-		//product와 product2는 hashCode가 다르다. new로 새 객체 생성했기 때문
-		// ==는 reference 비교 _ reference로 주소값 비교하기 때문에 false
-		//equals, hashCode 재정의해도 여전히 false _ 처음부터 new로 다른 객체로 생성했기 때문
-		System.out.println(product == product2);
+		//product와 product2는 주소가 다르다. new로 새 객체 생성했기 때문
+		// ==는 reference 비교 _ 주소값이 같은지를 비교하기 때문에 false다.
+//		System.out.println(product == product2);
 		
 		
 		//equals 사용하는 이유?
 		//name이 객체라서 == 일때는 값이 다르게 나올 수도 있기 때문에 정확한 비교 위해 equals 사용
-		//equals, hashCode 재정의해도 주소는 변하지 않기에 == 비교는 여전히 false
 		System.out.println("name".equals("name"));
 		System.out.println(new String("name") == new String("name"));
-
 		
 		//Object는 모든 타입을 다 받겠다는 의미
-		Object object = new Product("33","33", 11);
+		Object object = new ProductTest("33","33", 11);
 		
-		
-		//#############equals와 haschCode 짝꿍####################
-		//내용물 비교_ 객체비교!는 무조건 equals
-		//Object의 equals를 호출하면 reference로 비교해버린다.
-		//new로 새 객체를 생성했기에 hashCode값이 달라서 처음에는 false가 나온다.
+//		
+//		
+//		//#############equals와 haschCode 짝꿍####################
+//		//내용물 비교_ 객체비교!는 무조건 equals
+//		//Object의 equals를 호출하면 reference로 비교해버린다.
+//		//new로 새 객체를 생성했기에 hashCode값이 달라서 처음에는 false가 나온다.
 		System.out.println(product.equals(product2));   //false -> equals 재정의 후 true로 변화
+//		
+//		
+//		//hashCode가 얼결에 재정의 됐다. _ equals를 재정의하면서 hashCode도 함께 동일하게 변화됐다.
+//		System.out.println(product.hashCode() == product2.hashCode());   	//true
+//		
+//		
+//		//memory주소는 우리가 볼 수 없다. 다만, new로 각각 생성했기 때문에 reference비교해도 false
+//		System.out.println(product == product2);   //false
 		
 		
-		//hashCode가 얼결에 재정의 됐다. _ equals를 재정의하면서 hashCode도 함께 동일하게 변화됐다.
-		System.out.println(product.hashCode() == product2.hashCode());   	//true
 	}
 
-	//1. private 변수 선언
+	//private 변수 선언
 	private String id;
 	private String name;
 	private int unitPrice;
@@ -69,14 +74,14 @@ public class Product extends Object {
 	private long unitsInStock;
 	private String condition;
 
-	//2. parameter 받는 생성자 정의
-	public Product(String id, String name, int unitPrice) {
+	//parameter 받는 생성자 정의
+	public ProductTest(String id, String name, int unitPrice) {
 		this.id = id;
 		this.name = name;
 		this.unitPrice = unitPrice;
 	}
 
-	//3. getter, setter 정의 _ 캡슐화
+	//getter, setter 정의 _ 캡슐화
 	public String getId() {
 		return id;
 	}
@@ -142,33 +147,14 @@ public class Product extends Object {
 	}
 
 	
-	//4. 무지성 toString
+	//무지성 toString
 	@Override
 	public String toString() {
 		return "Product [id=" + id + ", name=" + name + ", unitPrice=" + unitPrice + ", description=" + description
 				+ ", manufacturer=" + manufacturer + ", category=" + category + ", unitsInStock=" + unitsInStock
 				+ ", condition=" + condition + "]";
 	}
-
-	
-	//5. equals, hashCode 메서드 Override(재정의)
-	//Source - Generate hashCode and equals
-	//equals를 재정의 _ id가 같으면 true로 설정했다.
-	//hashCdoe도 id기반으로 id가 같으면 동일하게 재정의
-	@Override
-	public int hashCode() {
-		return Objects.hash(id);
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Product other = (Product) obj;
-		return Objects.equals(id, other.id);
-	}
 }
+
+
+
