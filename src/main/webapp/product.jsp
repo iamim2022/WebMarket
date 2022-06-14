@@ -1,13 +1,12 @@
+<%@page import="com.survivalcoding.data.ProductRepository"%>
 <%@page import="javax.security.auth.message.callback.PrivateKeyCallback.Request"%>
 <%@page import="com.survivalcoding.domain.model.Product"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<!--  자바빈즈  -->
-<!--  1. 표준 액선 태그 -->
-<jsp:useBean id="repository"
-	class="com.survivalcoding.data.ProductRepository" scope="session"></jsp:useBean>
+<!--  자바빈즈 제거완료 -->
+
 	
 <!--  2. 자바코드 -->
 <% // ProductRepository repository = new ProductRepository();		//자바빈즈 안쓸 경우 대체사용	%>	
@@ -32,6 +31,9 @@
     </div>
     <%
     //내장객체 request사용해 id 넘겨받기
+    //싱글턴 패턴
+    ProductRepository repository = ProductRepository.getInstance();
+
     String id = request.getParameter("id");
     Product product = repository.getProductById(id);
     //out.print(product);

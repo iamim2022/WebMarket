@@ -1,11 +1,9 @@
+<%@page import="com.survivalcoding.data.ProductRepository"%>
 <%@page import="com.survivalcoding.domain.model.Product"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<!--  자바빈즈 _해당 클래스의 기본 생성자 호출  -->
-<jsp:useBean id="repository"
-	class="com.survivalcoding.data.ProductRepository" scope="session"></jsp:useBean>
 <html>
 <head>
 <meta charset="UTF-8">
@@ -29,6 +27,19 @@
 		<div class="container">
 			<div class="row" align="center">
 			<%
+			//welcome.jsp에서 저장하고, product.jsp에서 가져온다.
+			
+			//toString이 생략된 것
+			out.print(session.getAttribute("foods"));
+			
+			//싱글턴 패턴 _ 외부에서 생성자 사용못하게 막아놨다.
+			ProductRepository repository = ProductRepository.getInstance();		//자바빈즈 대신 사용
+			
+			//###########싱글턴 패턴 중요성##############
+			//ProductRepository생성자를 public으로 변경하고, 여기서 new를 해버리면, 새 상품등록시 new로 또 생성되기때문에 기존에 새로등록한 상품정보가 날아가버림.
+			//ProductRepository repository = new ProductRepository();
+			
+			//out.print(repository.hashCode());
 			List<Product> products = repository.getAllProducts();	//data가져오기
 			for (int i = 0; i < products.size(); i++){
 				Product product = products.get(i);
