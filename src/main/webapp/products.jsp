@@ -31,21 +31,23 @@
 				
 				//toString이 생략된 것
 				//시간이 지나면 null변경
-				if(session.getAttribute("foods") != null){
-					out.print(session.getAttribute("foods"));					
-				}
+//				if(session.getAttribute("foods") != null){
+//					out.print(session.getAttribute("foods"));					
+//				}
 				
 				//#####싱글턴 패턴 _ 외부에서 생성자 사용못하게 막아놨다.#####
 				//######싱글턴 패턴#######
 				//다른 클래스의 메서드 호출 _ 클래스명.메서드명();
-				ProductRepository repository = ProductRepository.getInstance();		//자바빈즈 대신 사용
+//				ProductRepository repository = ProductRepository.getInstance();		//자바빈즈 대신 사용
 				
 				//###########싱글턴 패턴 중요성##############
 				//ProductRepository생성자를 public으로 변경하고, 여기서 new를 해버리면, 새 상품등록시 new로 또 생성되기때문에 기존에 새로등록한 상품정보가 날아가버림.
 				//ProductRepository repository = new ProductRepository();
 				
 				//out.print(repository.hashCode());
-				List<Product> products = repository.getAllProducts();	//data가져오기
+				//type casting 
+				List<Product> products = (List<Product>) session.getAttribute("products");	//data가져오기
+				
 				for (int i = 0; i < products.size(); i++){
 					Product product = products.get(i);
 			%>
