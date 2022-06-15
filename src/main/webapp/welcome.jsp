@@ -15,8 +15,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
-	<jsp:include page="menu.jsp"></jsp:include>
-	
+	<jsp:include page="menu.jsp"></jsp:include>	
     <!-- jumbotron -->
     <div class="mt-4 p-5 bg-primary text-white rounded">
       <!-- .container>h1.display-3 -->
@@ -39,20 +38,17 @@
         현재 접속 시각: <%= format.format(now) %>
         
         <%
+        //session 설정
         List <String> foods = new ArrayList<>();
-        
-        foods.add("백반");
-        foods.add("백반2");
-        foods.add("백반3");
-        foods.add("백반4");
-        
+        foods.add("세션테스트");
+        foods.add("세션테스트2");
+        foods.add("세션테스트3");
+        //String foods에 List foods value를 값으로 할당
         session.setAttribute("foods", foods);
         %>
         
       </div>
     </div>
-
 	<jsp:include page="footer.jsp"></jsp:include>
-
 </body>
 </html>

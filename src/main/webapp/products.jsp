@@ -1,8 +1,8 @@
-<%@page import="com.survivalcoding.data.ProductRepository"%>
+
+<%@page import="com.survivalcoding.domain.repository.ProductRepository"%>
 <%@page import="com.survivalcoding.domain.model.Product"%>
 <%@page import="java.util.List"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -28,21 +28,26 @@
 			<div class="row" align="center">
 			<%
 			//welcome.jsp에서 저장하고, product.jsp에서 가져온다.
-			
-			//toString이 생략된 것
-			out.print(session.getAttribute("foods"));
-			
-			//싱글턴 패턴 _ 외부에서 생성자 사용못하게 막아놨다.
-			ProductRepository repository = ProductRepository.getInstance();		//자바빈즈 대신 사용
-			
-			//###########싱글턴 패턴 중요성##############
-			//ProductRepository생성자를 public으로 변경하고, 여기서 new를 해버리면, 새 상품등록시 new로 또 생성되기때문에 기존에 새로등록한 상품정보가 날아가버림.
-			//ProductRepository repository = new ProductRepository();
-			
-			//out.print(repository.hashCode());
-			List<Product> products = repository.getAllProducts();	//data가져오기
-			for (int i = 0; i < products.size(); i++){
-				Product product = products.get(i);
+				
+				//toString이 생략된 것
+				//시간이 지나면 null변경
+				if(session.getAttribute("foods") != null){
+					out.print(session.getAttribute("foods"));					
+				}
+				
+				//#####싱글턴 패턴 _ 외부에서 생성자 사용못하게 막아놨다.#####
+				//######싱글턴 패턴#######
+				//다른 클래스의 메서드 호출 _ 클래스명.메서드명();
+				ProductRepository repository = ProductRepository.getInstance();		//자바빈즈 대신 사용
+				
+				//###########싱글턴 패턴 중요성##############
+				//ProductRepository생성자를 public으로 변경하고, 여기서 new를 해버리면, 새 상품등록시 new로 또 생성되기때문에 기존에 새로등록한 상품정보가 날아가버림.
+				//ProductRepository repository = new ProductRepository();
+				
+				//out.print(repository.hashCode());
+				List<Product> products = repository.getAllProducts();	//data가져오기
+				for (int i = 0; i < products.size(); i++){
+					Product product = products.get(i);
 			%>
 			
 				<!-- 코드빠르게치기 꿀팁_12칸나눴을때 4칸 차지하겠다 .col-md-4 -->

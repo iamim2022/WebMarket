@@ -1,4 +1,5 @@
-<%@page import="com.survivalcoding.data.ProductRepository"%>
+
+<%@page import="com.survivalcoding.domain.repository.ProductRepository"%>
 <%@page import="javax.security.auth.message.callback.PrivateKeyCallback.Request"%>
 <%@page import="com.survivalcoding.domain.model.Product"%>
 <%@page import="java.util.List"%>
@@ -6,10 +7,9 @@
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <!--  자바빈즈 제거완료 -->
-
-	
-<!--  2. 자바코드 -->
-<% // ProductRepository repository = new ProductRepository();		//자바빈즈 안쓸 경우 대체사용	%>	
+<%
+// ProductRepository repository = new ProductRepository();		//자바빈즈 안쓸 경우 대체사용_singleton pattern으로 미사용!
+%>	
 <html>
 <head>
 <meta charset="UTF-8">
@@ -30,13 +30,13 @@
       </div>
     </div>
     <%
-    //내장객체 request사용해 id 넘겨받기
-    //싱글턴 패턴
-    ProductRepository repository = ProductRepository.getInstance();
+    //######싱글턴 패턴#######
+        //다른 클래스의 메서드 호출 _ 클래스명.메서드명();
+        ProductRepository repository = ProductRepository.getInstance();
 
-    String id = request.getParameter("id");
-    Product product = repository.getProductById(id);
-    //out.print(product);
+        String id = request.getParameter("id");       //내장객체 request사용해 id 넘겨받기
+        Product product = repository.getProductById(id);
+        //out.print(product);
     %>
     <div class="container">
       <div class="row">
